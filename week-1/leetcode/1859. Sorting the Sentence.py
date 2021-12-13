@@ -6,8 +6,7 @@ def sortSentence(s):
                 s[j], s[j + 1] = s[j + 1], s[j]
     sorted = ""
     for word in s:
-        word = word.replace(word[len(word) - 1], " ")
-        sorted += word
+        sorted += word.replace(word[len(word) - 1], " ")
     print(sorted[:len(sorted) - 1])
 
 
