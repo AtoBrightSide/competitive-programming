@@ -9,7 +9,7 @@ def minSetSize(arr):
     # initialize a counter
     counter = 0
     # store the occurence of each element in a separate list
-    occurence = [freq[key] for key in freq]
+    occurence = list(freq.values())
     # sort the list of occurences in such a way to get the most frequent element first
     occurence.sort(reverse=True)
     # iterate through freq
