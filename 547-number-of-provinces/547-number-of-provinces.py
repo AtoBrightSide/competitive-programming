@@ -20,7 +20,7 @@ class Solution:
             
 
         for i in range(len(isConnected)):
-            for j in range(1,len(isConnected[0])):
+            for j in range(i,len(isConnected[0])):
                 if isConnected[i][j] == 1:
                     unite(i, j)
     
