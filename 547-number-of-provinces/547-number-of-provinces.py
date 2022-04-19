@@ -20,8 +20,13 @@ class Solution:
             
 
         for i in range(len(isConnected)):
-            for j in range(len(isConnected[0])):
+            for j in range(1,len(isConnected[0])):
                 if isConnected[i][j] == 1:
                     unite(i, j)
     
         return provinces
+    '''
+    [1,1,0]
+    [1,1,0]
+    [0,0,1]
+    '''
