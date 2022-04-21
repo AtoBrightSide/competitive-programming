@@ -1,32 +1,33 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         parent = [i for i in range(len(isConnected))]
+        ranks = [1]*len(isConnected)
         provinces = len(isConnected)
+        
+        def find(node):
+            if parent[node] == node:
+                return node
+            parent[node] = find(parent[node])
+            return parent[node]
+            
         def unite(i, j):
+            parentI = find(i)
+            parentJ = find(j)
             nonlocal provinces
-            parent_of_a = find(i)
-            parent_of_b = find(j)
-            
-            if parent_of_a == parent_of_b:
-                return
-            
-            parent[parent_of_b] = parent_of_a
-            provinces -= 1
-            
-        def find(i):
-            if parent[i] == i:
-                return i
-            return find(parent[i])
-            
-
+            if parentI != parentJ:
+                provinces -= 1
+                if ranks[parentI] >= ranks[parentJ]:
+                    parent[parentJ] = parentI
+                    ranks[parentI] += ranks[parentJ]
+                    ranks[parentJ] = 0
+                else:
+                    parent[parentI] = parentJ
+                    ranks[parentJ] += ranks[parentI]
+                    ranks[parentI] = 0
+        
         for i in range(len(isConnected)):
-            for j in range(i,len(isConnected[0])):
+            for j in range(len(isConnected)):
                 if isConnected[i][j] == 1:
                     unite(i, j)
-    
+                    
         return provinces
-    '''
-    [1,1,0]
-    [1,1,0]
-    [0,0,1]
-    '''
