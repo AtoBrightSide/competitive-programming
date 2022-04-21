@@ -3,7 +3,7 @@ class Solution:
         arr, res = [], 0
         
         parent = [i for i in range(len(points))]
-        rank = [1]*len(points)
+        # rank = [1]*len(points)
         
         def find(node):
             if parent[node] == node:
@@ -24,13 +24,13 @@ class Solution:
             parentB = find(j)
             if parentA != parentB:
                 res += mtd
-                if rank[parentB] >= rank[parentA]:
-                    parent[parentB] = parentA
-                    rank[parentA] += rank[parentB]
-                    rank[parentB] = 1
-                else:
-                    parent[parentA] = parentB
-                    rank[parentB] += rank[parentA]
-                    rank[parentA] = 1
+                # if rank[parentB] >= rank[parentA]:
+                parent[parentB] = parentA
+                    # rank[parentA] += rank[parentB]
+                    # rank[parentB] = 1
+                # else:
+                    # parent[parentA] = parentB
+                    # rank[parentB] += rank[parentA]
+                    # rank[parentA] = 1
         
         return res
