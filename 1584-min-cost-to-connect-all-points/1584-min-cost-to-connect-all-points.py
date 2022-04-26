@@ -24,13 +24,7 @@ class Solution:
             parentB = find(j)
             if parentA != parentB:
                 res += mtd
-                # if rank[parentB] >= rank[parentA]:
                 parent[parentB] = parentA
-                    # rank[parentA] += rank[parentB]
-                    # rank[parentB] = 1
-                # else:
-                    # parent[parentA] = parentB
-                    # rank[parentB] += rank[parentA]
-                    # rank[parentA] = 1
+
         
         return res
