@@ -1,18 +1,27 @@
-class Solution(object):
-    def minimumEffortPath(self, heights):
-        m, n = len(heights), len(heights[0])
-        dist = [[float('inf')] * n for _ in range(m)]
-        minHeap = [(0, 0, 0)] # distance, row, col
-        DIR = [0, 1, 0, -1, 0]
-        while minHeap:
-            d, r, c = heappop(minHeap)
-            if d > dist[r][c]: continue
-            if r == m - 1 and c == n - 1:
-                return d  # Reach to bottom right
-            for i in range(4):
-                nr, nc = r + DIR[i], c + DIR[i + 1]
-                if 0 <= nr < m and 0 <= nc < n:
-                    newDist = max(d, abs(heights[nr][nc] - heights[r][c]))
-                    if dist[nr][nc] > newDist:
-                        dist[nr][nc] = newDist
-                        heappush(minHeap, (dist[nr][nc], nr, nc))
+class Solution:
+    def minimumEffortPath(self, heights: List[List[int]]) -> int:
+        def isValid(i, j):
+            return 0<=i<len(heights) and 0<=j<len(heights[i])
+        
+        dirs = [[0,1],[1,0],[0,-1],[-1,0]]        
+        
+        visited, myDict, myHeap = set(), {(0,0):0}, [[0, (0,0)]]
+        
+        def dijkstra():
+            while len(visited)<len(heights)*len(heights[0]): 
+                eff, (i, j) = heapq.heappop(myHeap)
+                if (i, j) == (len(heights)-1, len(heights[0])-1):
+                    return myDict[(i,j)]
+                for x, y in dirs:
+                    if isValid(i+x,j+y) and (i+x, j+y) not in visited:
+                        max_eff = max(abs(heights[i+x][j+y] - heights[i][j]), eff)
+                        if (x+i,y+j) not in myDict or ((x+i,y+j) in myDict and max_eff<myDict[(x+i, y+j)]):
+                            myDict[(x+i, y+j)] = max_eff
+                            heapq.heappush(myHeap, [max_eff, (i+x,j+y)])
+                        
+                        
+                visited.add((i,j))
+            return myDict[(len(heights)-1, len(heights[0])-1)]
+
+        
+        return dijkstra()
