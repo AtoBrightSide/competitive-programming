@@ -16,7 +16,7 @@ class TrieClass:
             curr = curr.children[letter]
         curr.end = True
     
-    def startsWith(self, word, flag):
+    def startsWith(self, word):
         curr = self.root
         root = ""
         for ch in word:
@@ -39,6 +39,6 @@ class Solution:
         ans = ""
         sentence = sentence.split()
         for word in sentence:
-            ans += " " + trie.startsWith(word, False)
+            ans += " " + trie.startsWith(word)
                 
         return ans[1:]
