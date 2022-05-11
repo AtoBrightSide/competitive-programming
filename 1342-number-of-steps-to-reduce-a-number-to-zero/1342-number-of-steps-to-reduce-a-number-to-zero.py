@@ -6,7 +6,7 @@ class Solution:
             if int(num) & 1 == 0:
                 num = num >> 1
             else:
-                num -= 1
+                num = num & (~1)
             count += 1
         
         return count
