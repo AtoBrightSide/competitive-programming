@@ -1,23 +1,26 @@
 class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        queue = deque()
-        outgoing = [0]*len(graph)
-        incoming = defaultdict(list)
-        for i in range(len(graph)):
-            outgoing[i] = len(graph[i])
-            if len(graph[i]) == 0:
-                queue.append(i)
-                continue
-            for edge in graph[i]:
-                incoming[edge].append(i)
+        # denoting 0 for untouched, 1 for processing and 2 for safe        
+        n = len(graph)
+        colors = [0] * n
         
-        res = []
-        while queue:
-            curr = queue.popleft()
-            res.append(curr)
-            for j in incoming[curr]:
-                outgoing[j] -= 1
-                if outgoing[j] == 0:
-                    queue.append(j)
-        res.sort()
+        def dfs(cur):
+            if colors[cur] == 2:
+                return True
+            if colors[cur] == 1:
+                return False
+            colors[cur] = 1
+            
+            isSafe = True
+            for i in graph[cur]: 
+                isSafe = isSafe and dfs(i)
+            colors[cur] = 2 if isSafe else 0
+            return isSafe
+        
+        for i in range(n):
+            if colors[i] != 2:
+                dfs(i)
+        
+        res = [i for i,num in enumerate(colors) if num == 2]
         return res
+        
