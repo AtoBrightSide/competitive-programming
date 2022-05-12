@@ -7,8 +7,10 @@ class Solution:
         def dfs(cur):
             if colors[cur] == 2:
                 return True
+            
             if colors[cur] == 1:
                 return False
+            
             colors[cur] = 1
             
             isSafe = True
