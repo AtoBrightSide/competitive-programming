@@ -12,17 +12,20 @@ class Solution:
                 return False
             
             colors[cur] = 1
-            
             isSafe = True
+            
             for i in graph[cur]: 
                 isSafe = isSafe and dfs(i)
+            
             colors[cur] = 2 if isSafe else 0
             return isSafe
-        
+        res = []
         for i in range(n):
-            if colors[i] != 2:
+            if colors[i] == 0:
                 dfs(i)
+            if colors[i] == 2:
+                res.append(i)
         
-        res = [i for i,num in enumerate(colors) if num == 2]
+        
         return res
         
