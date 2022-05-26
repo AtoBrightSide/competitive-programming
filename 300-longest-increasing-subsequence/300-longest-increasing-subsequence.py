@@ -1,9 +1,16 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:        
-        dp = [1] * len(nums)
+        memo, longest = {len(nums) - 1: 1}, -1
+
+        @lru_cache(None)
+        def dfs(index):                
+            longest = 1
+            for i in range(index + 1, len(nums)):
+                if nums[i] > nums[index]:   
+                    longest = max(longest, 1 + dfs(i))
+
+            return longest
         
-        for i in range(len(nums)-2, -1, -1):
-            for j in range(i, len(nums)):
-                dp[i] = max(dp[i], 1 + dp[j]) if nums[i] < nums[j] else dp[i]
-        
-        return max(dp)
+        for i in range(len(nums)):
+            longest = max(longest, dfs(i))
+        return longest
