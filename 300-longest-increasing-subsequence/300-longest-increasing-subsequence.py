@@ -1,20 +1,9 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:        
-        memo, longest = {len(nums) - 1: 1}, -1
-
-        for i in range(len(nums)):
-            longest = max(longest, self.dfs(i, nums, memo))
+        dp = [1] * len(nums)
         
-        return longest
-            
-    def dfs(self, index, nums, memo):        
-        if index in memo:   
-            return memo[index]
+        for i in range(len(nums)-2, -1, -1):
+            for j in range(i, len(nums)):
+                dp[i] = max(dp[i], 1 + dp[j]) if nums[i] < nums[j] else dp[i]
         
-        longest = 1
-        for i in range(index + 1, len(nums)):
-            if nums[i] > nums[index]:   
-                longest = max(longest, 1 + self.dfs(i, nums, memo))
-        
-        memo[index] = longest
-        return memo[index]
+        return max(dp)
