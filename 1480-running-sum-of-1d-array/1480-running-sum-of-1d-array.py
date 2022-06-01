@@ -1,8 +1,6 @@
 class Solution:
-    def runningSum(self, nums: List[int]) -> List[int]:
-        prefixSum = [num for num in nums]
-        
+    def runningSum(self, nums: List[int]) -> List[int]:        
         for i in range(1, len(nums)):
-            prefixSum[i] = prefixSum[i-1] + nums[i]
+            nums[i] += nums[i-1]
             
-        return prefixSum
+        return nums
