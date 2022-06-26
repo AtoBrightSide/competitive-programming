@@ -1,6 +1,5 @@
 class Solution:
     def maxScore(self, cardPoints: List[int], k: int) -> int:
-        total = sum(cardPoints)
         s, e = 0, len(cardPoints) - k - 1
         ans = 0
         
@@ -9,7 +8,7 @@ class Solution:
             prefixSums.append(prefixSums[i-1] + cardPoints[i])
         
         while e < len(cardPoints):
-            ans = max(ans, total - (prefixSums[e] - (prefixSums[s-1] if s > 0 else 0)))
+            ans = max(ans, prefixSums[-1] - (prefixSums[e] - (prefixSums[s-1] if s > 0 else 0)))
             s += 1
             e += 1
             
