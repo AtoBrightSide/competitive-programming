@@ -1,17 +1,28 @@
 class Solution:
     def checkPossibility(self, nums: List[int]) -> bool:
         count = 0
-        left, right = 0, 1
-        while right < len(nums):
-            if nums[left] > nums[right]:
+        
+        '''
+            ,
+        - 1 5 6
+        
+        left -
+        right 5
+        count 1
+        '''
+        
+        for i in range(len(nums) - 1):
+            left, right = i - 1, i + 1
+            
+            if nums[i] > nums[right]:
                 count += 1
-                if count > 1:   return False
-                if left > 0 and right < len(nums)-1:
-                    if nums[left - 1] > nums[right] and nums[right + 1] < nums[left]:   return False
-                
-                elif right < len(nums)-1 and nums[right] > nums[right + 1]: return False
-            
-            left += 1
-            right += 1
-            
-        return count < 2
+                if count > 1:   
+                    return False
+                if i == 0:   
+                    nums[i] = -float('inf')
+                elif nums[left] > nums[right]:  
+                    nums[right] = nums[i]
+                else:
+                    nums[i] = nums[left]
+                    
+        return True
