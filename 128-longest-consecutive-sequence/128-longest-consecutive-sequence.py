@@ -1,13 +1,19 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        if nums == []:  return 0
-        nums.sort()
-        ans = count = 1
-        for i in range(len(nums)-1):
-            if nums[i] + 1 == nums[i+1]:    count += 1
-            elif nums[i] == nums[i+1]:  continue
-            else:
-                ans = max(ans, count)
-                count = 1
-                
-        return max(ans, count)
+        nums_hashed = set(nums)
+        memo = {}
+        
+        def dp(num):
+            if num not in nums_hashed:  return 0
+            
+            if num in memo: return memo[num]
+            
+            memo[num] = 1 + dp(num+1)
+            
+            return memo[num]
+        
+        ans = 0
+        for num in nums:
+            ans = max(ans, dp(num))
+            
+        return ans
