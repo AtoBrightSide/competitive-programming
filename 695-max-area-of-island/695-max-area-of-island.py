@@ -1,32 +1,25 @@
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        def checker(i, j):
-            return 0<=i<len(grid) and 0<=j<len(grid[i])
+        isValid = lambda i,j: 0 <= i < len(grid) and 0 <= j < len(grid[0])
         
-        dirs = [[-1,0],[0,1],[1,0],[0,-1]]
-        visited, best = {}, 0
+        DIRS = [[0,1],[1,0],[0,-1],[-1,0]] 
+        visited = set()
         
-        def dfs(i,j, area):
-            if (i,j) in visited:
-                return visited[(i,j)]
-            if checker(i, j) and grid[i][j] == 1:
-                area += 1
-                print((i,j, area))
-                visited[(i,j)] = area
-                for x, y in dirs:
-                    area = max(dfs(i+x, j+y, area), area)
-            return area
-                
+        def dp(i, j):
+            count = 0
+            visited.add((i, j))
+            for d in DIRS:
+                x, y = d[0] + i, d[1] + j
+                if isValid(x, y) and (x, y) not in visited and grid[x][y] == 1:
+                    count += 1 + dp(x, y)
+                    
+            return count
+        
+        max_area = 0
         for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                best = max(dfs(i,j, 0), best)
-                
-        return best
-    '''
-    [
-   0 [0,1,1],
-   1 [1,0,1],
-   2 [1,0,1],
-   3 [0,1,1]
-    ]
-    '''
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    max_area = max(max_area, 1 + dp(i, j))
+            
+            
+        return max_area
