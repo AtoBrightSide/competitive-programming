@@ -5,11 +5,9 @@ class Solution:
             curr = defaultdict(int)
             for ch in w:    
                 curr[ch] += 1
-            for ch in w:
                 sub_counter[ch] = max(sub_counter[ch], curr[ch])
         
         words1 = set(words1)
-        L = len(words2)
         
         universal = []
         for word in words1:
