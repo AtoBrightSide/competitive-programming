@@ -1,24 +1,25 @@
 class Solution:
     def countVowelPermutation(self, n: int) -> int:
         rules = {
-            'a': ['e'],
+            'a': ['i', 'e', 'u'],
             'e': ['a','i'],
-            'i': ['a','e','o','u'],
-            'o': ['i', 'u'],
-            'u': ['a']
+            'i': ['e', 'o'],
+            'o': ['i'],
+            'u': ['o','i'],
         }
-        @cache
-        def dp(i, letter):
-            if i == n:  return 1
-            
-            count = 0
-            for l in rules[letter]:
-                count += dp(i+1, l)
-                
-            return count
+        mapper = {
+            "a": 0,
+            "e": 1,
+            "i": 2,
+            "o": 3,
+            "u": 4,
+        }
+        dp = [[0] * 5 for i in range(n)]
+        dp[0] = [1] * 5
         
-        possible_strings = 0
-        for letter in "aeiou":
-            possible_strings += dp(1, letter)
+        for row in range(1, n):
+            for i, val in enumerate("aeiou"):
+                for letter in rules[val]:
+                    dp[row][i] += dp[row - 1][mapper[letter]]
         
-        return possible_strings % ((10 ** 9) + 7)
+        return sum(dp[-1]) % ((10 ** 9) + 7)
