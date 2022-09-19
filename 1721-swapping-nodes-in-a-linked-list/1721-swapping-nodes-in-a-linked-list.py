@@ -19,17 +19,6 @@ class Solution:
             return prev
         
         head = reverseList(reverseList(head))
-        answer = swapped = ListNode(0)
-        while head:
-            while head in swap:
-                if head == swap[0]:
-                    swapped.next = ListNode(swap[-1].val)
-                else:
-                    swapped.next = ListNode(swap[0].val)
-                swapped = swapped.next
-                head = head.next
-            swapped.next = head
-            swapped = swapped.next
-            if head:   head = head.next
         
-        return answer.next 
+        swap[0].val, swap[1].val = swap[1].val, swap[0].val
+        return head
