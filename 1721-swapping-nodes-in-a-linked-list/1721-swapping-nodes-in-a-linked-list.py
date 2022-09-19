@@ -5,20 +5,12 @@
 #         self.next = next
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        swap = []
-        def reverseList(node):
-            i, prev = 1, None
-            while node:
-                if i == k:  swap.append(node)
-                temp = node.next
-                node.next = prev
-                prev = node
-                node = temp
-                i += 1
-            
-            return prev
+        answer = head
+        nodes = []
+        while head:
+            nodes.append(head)
+            head = head.next
         
-        head = reverseList(reverseList(head))
+        nodes[k-1].val, nodes[len(nodes) - k].val = nodes[len(nodes) - k].val, nodes[k-1].val
         
-        swap[0].val, swap[1].val = swap[1].val, swap[0].val
-        return head
+        return answer
