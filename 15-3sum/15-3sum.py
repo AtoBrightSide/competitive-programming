@@ -1,28 +1,26 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        
         triplets = set()
-        done = set()
-        def twoSum(target, i):
-            if target in done:  return
-            
-            done.add(target)
-            temp = defaultdict(int)
-            for j, num in enumerate(nums):
-                if j != i:  
-                    temp[num] += 1
-
-            for num in temp:
-                curr = target - num
-                if curr in temp:
-                    potential_triplet = tuple(sorted([-target, num, curr]))
-                    if temp[curr] > 1 and curr == num:
-                        triplets.add(potential_triplet)
-                    if curr != num:
-                        triplets.add(potential_triplet)
-            
-        for i in range(len(nums)):      
-            twoSum(-nums[i], i)
+        nums.sort()
         
+        for i in range(len(nums)-2):
+            l, r = i+1, len(nums) - 1
+            while l < r:
+                possible_triplet = [nums[i], nums[l], nums[r]]
+                
+                if sum(possible_triplet) > 0:
+                    r -= 1
+                elif sum(possible_triplet) < 0:
+                    l += 1
+                else:
+                    triplets.add(tuple(possible_triplet))
+                    
+                    while l < r and nums[l] == nums[l+1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r-1]:
+                        r -= 1
+                    
+                    l += 1
+                    r -= 1
         
-        return list(triplets)
+        return triplets
