@@ -13,25 +13,18 @@ class Solution:
     def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
         if not head: return None
         
-        def buildTree(start):
-            if not start:   return None
-            if not start.next:  return TreeNode(start.val)
+        def buildTree(start, end):
+            if start == end:    return None
             
             mid = fast = start
-            prev = None
-            while fast and fast.next:
-                prev = mid
+            while fast != end and fast.next != end:
                 mid = mid.next
                 fast = fast.next.next
             
-            temp = mid.next
-            prev.next = None
-            
             node = TreeNode(mid.val)
-            
-            node.left = buildTree(start)
-            node.right = buildTree(temp)
+            node.left = buildTree(start, mid)
+            node.right = buildTree(mid.next, end)
             
             return node
-        
-        return buildTree(head)
+            
+        return buildTree(head, None)
