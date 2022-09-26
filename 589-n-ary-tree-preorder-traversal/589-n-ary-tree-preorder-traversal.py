@@ -9,13 +9,14 @@ class Node:
 class Solution:
     def preorder(self, root: 'Node') -> List[int]:
         nodes = []
-        def dfs(node):
-            nonlocal nodes
-            if not node:    return
-            
-            nodes.append(node.val)
-            for child in node.children:
-                dfs(child)
+        if not root:    return nodes
         
-        dfs(root)
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            nodes.append(curr.val)
+            
+            for i in range(len(curr.children) - 1, -1, -1):
+                stack.append(curr.children[i])
+        
         return nodes
