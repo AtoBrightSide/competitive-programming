@@ -8,12 +8,16 @@ class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         
         nodes = []
+        if not root:    return nodes
+        stack = [root]
         
-        def dfs(node):
-            if not node:    return
-            nodes.append(node.val)
-            if node.left:   dfs(node.left)
-            if node.right:  dfs(node.right)
+        while stack:
+            curr = stack.pop()
+            nodes.append(curr.val)
+            
+            if curr.right:
+                stack.append(curr.right)
+            if curr.left:
+                stack.append(curr.left)
         
-        dfs(root)
         return nodes
