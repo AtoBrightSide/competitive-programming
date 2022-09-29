@@ -1,13 +1,16 @@
 class Solution:
     def maxFrequency(self, nums: List[int], k: int) -> int:
-        nums.sort()
-        slow = fast = best = 0
-        total = nums[0]
-        while slow < len(nums):
-            while fast<len(nums) and nums[fast]*(fast-slow+1) <= total+k:
-                best = max(best, fast-slow+1)
-                fast += 1
-                total += nums[fast] if fast<len(nums) else 0
-            total -= nums[slow]
-            slow += 1
-        return best
+        nums.sort(reverse=True)
+        prefix = [num for num in nums]
+        for i in range(1, len(nums)):
+            prefix[i] = prefix[i-1] + nums[i]
+        
+        window = 1
+        r = 0
+        for l, num in enumerate(nums):
+            while r < len(nums) and l < len(nums) and abs(num * (r - l + 1) - (prefix[r] - (prefix[l-1] if l > 0 else 0))) <= k:
+                r += 1
+            
+            window = max(window, r - l)
+        
+        return window
