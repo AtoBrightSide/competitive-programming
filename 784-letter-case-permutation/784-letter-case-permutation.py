@@ -1,24 +1,15 @@
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
-        strings = set([s])
+        strings = set()
         def backtrack(i, comb):
             if len(comb) == len(s):
                 strings.add("".join(comb))
                 return 
             
-            for j in range(i+1, len(s)):
-                curr = s[j]
-                # if curr.isdigit():
-                #     comb.append(curr)
-                #     continue
-                comb.append(curr.lower())
-                backtrack(j, comb)
-                comb.pop()
+            curr = s[i]
+            if not curr.isdigit():  backtrack(i+1, comb + list(curr.swapcase()))
+            backtrack(i+1, comb + list(curr))
                 
-                comb.append(curr.upper())
-                backtrack(j, comb)
-                comb.pop()
-        
-        backtrack(-1, [])
+        backtrack(0, [])
         
         return strings
