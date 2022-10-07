@@ -1,16 +1,15 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:        
-        allPaths = []
-        def traverse(node, curr):
+        validPaths = []
+        def backtrack(node, curr_path):
             if node == len(graph) - 1:
-                allPaths.append(curr.copy())
+                validPaths.append(curr_path.copy())
                 return
             
-            for n in graph[node]:
-                curr.append(n)
-                traverse(n, curr)
-                curr.pop()
-                
-        traverse(0, [0])
+            for neigh in graph[node]:
+                curr_path.append(neigh)
+                backtrack(neigh, curr_path)
+                curr_path.pop()
         
-        return allPaths
+        backtrack(0, [0])
+        return validPaths
