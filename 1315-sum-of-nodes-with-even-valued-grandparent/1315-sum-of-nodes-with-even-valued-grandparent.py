@@ -9,23 +9,15 @@ class Solution:
         if root is None:
             return []
         total = 0
-        queue = deque()
-        queue.append(root)
-        
-        while queue:
-            levels = deque()
-            while queue:
-                curr = queue.popleft()
-                if curr.val % 2 == 0:
-                    if curr.left:   
-                        if curr.left.left:   total += curr.left.left.val
-                        if curr.left.right:  total += curr.left.right.val
-                    if curr.right:  
-                        if curr.right.left:   total += curr.right.left.val
-                        if curr.right.right:  total += curr.right.right.val
-                if curr.left:    levels.append(curr.left)
-                if curr.right:   levels.append(curr.right)
-                
-            queue = levels
+        def dfs(node, p, gp):
+            nonlocal total
+            if not node:    return
             
+            if gp:  total += node.val if gp.val % 2 == 0 else 0
+            
+            if node.left:   dfs(node.left, node, p)    
+            if node.right:  dfs(node.right, node, p)
+        
+        dfs(root, None, None)
+        
         return total
