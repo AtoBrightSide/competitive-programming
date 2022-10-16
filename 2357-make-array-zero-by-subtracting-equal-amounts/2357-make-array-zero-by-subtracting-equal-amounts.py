@@ -1,6 +1,13 @@
 class Solution:
     def minimumOperations(self, nums: List[int]) -> int:
-        nums.sort()
+        arr = [0] * 101
+        for num in nums:
+            arr[num] += 1
+        
+        nums = []
+        for i, val in enumerate(arr):
+            if val > 0: nums.extend([i] * 4)
+        
         if nums[-1] == 0:   return 0
         
         for i, num in enumerate(nums):
