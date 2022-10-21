@@ -22,5 +22,5 @@ class Solution:
             remember[(node, robbed)] = max(pick, dontPick)
             return remember[(node, robbed)]
             
-        return max(traverse(root, True), traverse(root, False))
+        return traverse(root, False)
     
