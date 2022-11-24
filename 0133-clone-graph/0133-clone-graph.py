@@ -13,22 +13,21 @@ class Solution:
         
         self.graph = defaultdict(list)
         self.traverse(node)
-        used = {}
-        def build(root):
-            if not root:
-                return None
+        self.used = {}
             
-            root = Node(root)
-            used[root.val] = root
-            for neigh in self.graph[root.val]:
-                if neigh not in used:   
-                    root.neighbors.append(build(neigh))
-                else:
-                    root.neighbors.append(used[neigh])
-            
-            return root
-            
-        return build(node.val)
+        return self.build(node.val)
+    
+    def build(self, root):
+        root = Node(root)
+        self.used[root.val] = root
+        
+        for neigh in self.graph[root.val]:
+            if neigh not in self.used:   
+                root.neighbors.append(self.build(neigh))
+            else:
+                root.neighbors.append(self.used[neigh])
+
+        return root
         
     def traverse(self, node):
         if not node:    return
