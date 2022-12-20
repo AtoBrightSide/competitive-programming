@@ -18,6 +18,11 @@ class Solution:
             return False
         if L == 0:
             return True
+        if L == 2:
+            for node in range(1, n + 1):
+                if node not in odds[0][1] and node not in odds[1][1]:
+                    return True
+            return False
         
         def check(connect):
             for i in range(L):
@@ -31,9 +36,4 @@ class Solution:
 
             return False not in connect
         
-        if L == 2:
-            for node in range(1, n + 1):
-                if node not in odds[0][1] and node not in odds[1][1]:
-                    return True
-            return False
         return check([False] * L)
