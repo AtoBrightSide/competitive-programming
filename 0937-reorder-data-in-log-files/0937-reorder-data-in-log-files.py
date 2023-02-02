@@ -1,14 +1,21 @@
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
-        letters, digits = [], []
+        letter_logs = []
+        digit_logs = []
         for log in logs:
-            curr_log = log.split(' ')
-            
-            if curr_log[1].isdigit():
-                digits.append(log)
+            curr = log.split()
+            if curr[1].isdigit():
+                digit_logs.append(log)
             else:
-                letters.append(log)
-                
-        srtltr = sorted(letters, key=lambda ch: (ch.split()[1:], ch.split()[0]))
+                letter_logs.append([" ".join(curr[1:]), curr[0] + " "])
         
-        return srtltr + digits                
+        letter_logs.sort()
+        final_order = []
+        for content, ident in letter_logs:
+            final_order.append(ident + content)
+        
+        final_order.extend(digit_logs)
+
+        return final_order
+        
+        
