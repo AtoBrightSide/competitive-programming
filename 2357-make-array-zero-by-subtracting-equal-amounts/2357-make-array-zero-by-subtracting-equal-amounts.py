@@ -1,27 +1,15 @@
 class Solution:
     def minimumOperations(self, nums: List[int]) -> int:
-        arr = [0] * 101
-        for num in nums:
-            arr[num] += 1
+        nums = sorted(list(set(nums)))
         
-        nums = []
-        for i, val in enumerate(arr):
-            if val > 0: nums.extend([i] * 4)
+        moves = 0
+        sub = 0
         
-        if nums[-1] == 0:   return 0
+        for i in range(len(nums)):
+            nums[i] -= sub
+            if nums[i] != 0:
+                moves += 1
+                sub += nums[i]
         
-        for i, num in enumerate(nums):
-            if num != 0:
-                l = i
-                break
+        return moves
                 
-        so_far = 0
-        ops = 0
-        
-        for i in range(l, len(nums)):
-            nums[i] -= so_far
-            if nums[i] > 0:
-                so_far += nums[i]
-                ops += 1
-        
-        return ops
