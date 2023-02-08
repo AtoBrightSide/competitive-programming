@@ -5,7 +5,11 @@ class Solution:
             my_map[x].append(y)
             my_map[y].append(x)
         
-        curr_num = sorted(my_map.items(), key=lambda x: (len(x[1]), x[0]))[0][0]
+        for key in my_map:
+            if len(my_map[key]) == 1:
+                curr_num = key
+                break
+        
         nums = [curr_num]
         used = set([curr_num])
         while len(nums) < len(my_map):
