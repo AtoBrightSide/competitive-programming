@@ -8,11 +8,10 @@ class Solution:
         shortest_degree = L
         degree = 1
         for num, indices in degrees.items():
-            if len(indices) >= degree:
-                if len(indices) == degree:
-                    shortest_degree = min(shortest_degree, abs(indices[-1] - indices[0]) + 1)
-                else:
-                    shortest_degree = abs(indices[-1] - indices[0]) + 1
+            if len(indices) == degree:
+                shortest_degree = min(shortest_degree, abs(indices[-1] - indices[0]) + 1)
+            if len(indices) > degree:
+                shortest_degree = abs(indices[-1] - indices[0]) + 1
                 degree = len(indices)
         
         return shortest_degree
