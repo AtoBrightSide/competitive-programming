@@ -3,19 +3,23 @@ class UndergroundSystem:
     def __init__(self):
         self.info = {}
         self.route = {}
+        self.routeCount = {}
+        
     def checkIn(self, id: int, stationName: str, t: int) -> None:
         self.info[id] = (stationName, t)
 
     def checkOut(self, id: int, stationName: str, t: int) -> None:
         checkInPlace, checkInTime = self.info[id]
         if (checkInPlace, stationName) not in self.route:
-            self.route[checkInPlace, stationName] = [t - checkInTime]
+            self.route[checkInPlace, stationName] = t - checkInTime
+            self.routeCount[(checkInPlace, stationName)] = 1
         else:
-            self.route[checkInPlace, stationName].append(t-checkInTime)
+            self.route[checkInPlace, stationName] += t - checkInTime
+            self.routeCount[(checkInPlace, stationName)] += 1
         
 
     def getAverageTime(self, startStation: str, endStation: str) -> float:
-        return sum(self.route[startStation, endStation])/len(self.route[startStation, endStation])
+        return self.route[startStation, endStation] / self.routeCount[(startStation, endStation)]
 
 
 # Your UndergroundSystem object will be instantiated and called as such:
