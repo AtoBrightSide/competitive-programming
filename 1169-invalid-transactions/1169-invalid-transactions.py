@@ -1,21 +1,19 @@
 class Solution:
     def invalidTransactions(self, transactions: List[str]) -> List[str]:
-        invalid = set()
+        invalid_transactions = set()
         tracker = defaultdict(list)
-        for i, transaction in enumerate(transactions):
-            n, t, a, c = transaction.split(",")
-            if int(a) > 1000:
-                # invalid.append(f"{n},{t},{a},{c}")
-                invalid.add(i)
-            if n in tracker:
-                for trs in tracker[n]:
-                    time, amt, city, idx = trs
-                    if abs(int(time) - int(t)) <= 60 and city != c:
-                        invalid.add(idx)
-                        invalid.add(i)
-            
-            tracker[n].append([t, a, c, i])
         
-        invalid = [transactions[i] for i in invalid]
-        return invalid
+        for i, curr_transaction in enumerate(transactions):
+            name, time, amt, city = curr_transaction.split(",")
+            if int(amt) > 1000:
+                invalid_transactions.add(i)
+                
+            for other_transaction in tracker[name]:
+                idx, time_2, city_2 = other_transaction
+                if abs(time_2 - int(time)) <= 60 and city_2 != city:
+                    invalid_transactions.add(idx)
+                    invalid_transactions.add(i)
             
+            tracker[name].append([i, int(time), city])
+        
+        return [transactions[i] for i in invalid_transactions]
