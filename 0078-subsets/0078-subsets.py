@@ -1,13 +1,17 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        all_subsets = set()
-        def backtrack(i, so_far):
+        subsets = []
+        
+        def recursive(i, so_far):
+            if i == len(nums) + 1:
+                return
             
-            all_subsets.add(tuple(so_far))
-            for j in range(i + 1, len(nums)):
-                backtrack(j, so_far + [nums[j]])
+            subsets.append(so_far.copy())
+            for j in range(i, len(nums)):
+                so_far.append(nums[j])
+                recursive(j + 1, so_far)
+                so_far.pop()
         
-        for i, num in enumerate(nums):
-            backtrack(i, [num])
+        recursive(0, [])
         
-        return [[]] + [list(subset) for subset in all_subsets]
+        return subsets
