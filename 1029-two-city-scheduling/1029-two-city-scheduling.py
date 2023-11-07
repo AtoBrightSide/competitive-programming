@@ -1,13 +1,25 @@
 class Solution:
     def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+        # append difference in cost between two cities, and sort based on that
+        costs = sorted([[a, b, abs(a - b)] for a, b in costs], key=lambda cost: cost[2], reverse=True)
+        # prioritize the costs with biggest differences, while cities are not full.
         min_cost = 0
-        cost_diff = sorted([[costs[i][1] - costs[i][0], i] for i in range(len(costs))])
-        
-        for i, curr in enumerate(cost_diff):
-            diff, idx = curr
-            if i < len(cost_diff) / 2:
-                min_cost += costs[idx][1]
+        a_count = b_count = 0
+        n = len(costs)
+        for a_cost, b_cost, cost_diff in costs:
+            if a_cost <= b_cost:
+                if a_count < n / 2:
+                    min_cost += a_cost
+                    a_count += 1
+                else:
+                    min_cost += b_cost
+                    b_count += 1
             else:
-                min_cost += costs[idx][0]
+                if b_count < n / 2:
+                    min_cost += b_cost
+                    b_count += 1
+                else:
+                    min_cost += a_cost
+                    a_count += 1
         
         return min_cost
