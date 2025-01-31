@@ -16,3 +16,19 @@ class Solution:
             ptr1 += 1
         
         return longest
+
+# 2nd time trying
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        slow_pointer = 0
+        longest = 0
+        store = set()
+        for letter in s:
+            while letter in store:
+                curr_letter = s[slow_pointer]
+                store.remove(curr_letter)
+                slow_pointer += 1
+            store.add(letter)
+            longest = max(longest, len(store))
+
+        return longest
