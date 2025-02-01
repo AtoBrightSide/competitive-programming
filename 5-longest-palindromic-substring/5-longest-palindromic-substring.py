@@ -31,3 +31,28 @@ class Solution:
             curr += 1
             
         return ans
+
+# Another try
+class Solution:
+    def __init__(self):
+        self.longest = 1
+        self.ans = [0,0]
+
+    def checkPalindrome(self, left, right, s):
+        while left > -1 and right < len(s) and s[left] == s[right]:
+            if right - left + 1 > self.longest:
+                self.longest = right - left + 1
+                self.ans = [left, right]
+            left -= 1
+            right += 1
+
+    def longestPalindrome(self, s: str) -> str:
+        for index, letter in enumerate(s):
+            # for odd
+            self.checkPalindrome(index - 1, index + 1, s)
+
+            # for even
+            self.checkPalindrome(index, index + 1, s)
+
+        start, end = self.ans
+        return s[start : end + 1]
