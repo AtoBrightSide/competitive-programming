@@ -1,25 +1,26 @@
 class Solution:
     def queryResults(self, limit: int, queries: List[List[int]]) -> List[int]:
-        ballToColorTracker = {}
-        colorToBallTracker = {}
-        distinctColors = []
-        currColors = 0
+        ball_to_color_tracker = {}
+        color_to_ball_tracker = {}
+        distinct_colors = []
+        curr_colors = 0
         for query in queries:
             ball, color = query
             # check if ball has been colored before
-            if ball in ballToColorTracker:
-                prevColor = ballToColorTracker[ball]
-                if colorToBallTracker[prevColor] == 1:
-                    del colorToBallTracker[prevColor]
-                    currColors -= 1
+            if ball in ball_to_color_tracker:
+                prev_color = ball_to_color_tracker[ball]
+                if color_to_ball_tracker[prev_color] == 1:
+                    del color_to_ball_tracker[prev_color]
+                    curr_colors -= 1
                 else:
-                    colorToBallTracker[prevColor] -= 1
+                    color_to_ball_tracker[prev_color] -= 1
 
-            currColors += 1 if color not in colorToBallTracker else 0
+            curr_colors += 1 if color not in color_to_ball_tracker else 0
 
-            ballToColorTracker[ball] = color
-            colorToBallTracker[color] = colorToBallTracker.get(color, 0) + 1
+            ball_to_color_tracker[ball] = color
+            color_to_ball_tracker[color] = color_to_ball_tracker.get(
+                color, 0) + 1
 
-            distinctColors.append(currColors)
+            distinct_colors.append(curr_colors)
 
-        return distinctColors
+        return distinct_colors
