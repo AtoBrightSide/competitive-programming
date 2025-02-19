@@ -1,12 +1,8 @@
-/**
- * @param {string} tiles
- * @return {number}
- */
-var numTilePossibilities = function (tiles) {
-    let seen = new Set();
-    let N = tiles.length;
+function numTilePossibilities(tiles: string): number {
+    let seen: Set<string> = new Set<string>();
+    let N: number = tiles.length;
 
-    const countSequences = (currTiles, indexSet) => {
+    const countSequences = (currTiles: string, indexSet: Set<number>) => {
         if (seen.has(currTiles)) return
 
         if (currTiles.trim() !== '') seen.add(currTiles);
@@ -20,6 +16,6 @@ var numTilePossibilities = function (tiles) {
             currTiles = currTiles.slice(0, -1);
         }
     };
-    countSequences('', new Set());
+    countSequences('', new Set<number>());
     return seen.size;
 };
